@@ -33,10 +33,13 @@ The game tests users with multiple-choice questions, provides instant feedback, 
 Make sure Node.js is installed on your system:
 ```bash
 node -v
+
 2. Clone the Repository
 git clone https://github.com/your-username/TRIVIA-GAME.git
+
 3. Navigate into the Project Folder
 cd TRIVIA-GAME
+
 4. Run the Game
 node index.js
 
