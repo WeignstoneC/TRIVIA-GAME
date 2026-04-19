@@ -39,6 +39,7 @@ git clone https://github.com/your-username/TRIVIA-GAME.git
 cd TRIVIA-GAME
 4. Run the Game
 node index.js
+
 🎯 How to Play
 Run the program using Node.js
 A question will appear with four answer options
@@ -47,6 +48,7 @@ Press Enter to submit
 You have 10 seconds per question
 The game continues until all questions are answered
 Final score and performance are displayed at the end
+
 📊 Game Logic Overview
 ✔ Core Features Implemented
 Functions
@@ -66,10 +68,12 @@ Loops / Iteration
 .reduce() → Calculates performance score
 Asynchronous Features
 setTimeout() → Enforces 10-second timer per question
+
 📁 Project Structure
 TRIVIA-GAME/
 │── index.js        # Main game logic
 │── README.md       # Project documentation
+
 🧪 Example Gameplay
 🎮 Welcome to the Trivia Game!
 You will have 10 seconds per question.
@@ -89,16 +93,16 @@ Your answer (A, B, C, D): A
 Score: 2 / 3
 Time Taken: 22.45 seconds
 Performance: 2/3
+
 🔧 Future Improvements
 Add difficulty levels (Easy / Medium / Hard)
 Add replay option without restarting program
 Store high scores in a file
 Randomize question order
 Add colored CLI output for better UX
+
 👨‍💻 Author
-
 Created as a JavaScript CLI project demonstrating:
-
 Problem-solving skills
 Asynchronous programming
 Modular function design
