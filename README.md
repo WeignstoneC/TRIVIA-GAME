@@ -54,6 +54,7 @@ Final score and performance are displayed at the end
 
 📊 Game Logic Overview
 ✔ Core Features Implemented
+
 Functions
 startGame() → Initializes the game
 askQuestion() → Displays questions and handles timer
