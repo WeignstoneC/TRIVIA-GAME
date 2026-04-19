@@ -1,64 +1,68 @@
-const questions = [
+const readline = require("readline");
+
+const quizQuestions = [
   {
     question: "What is the capital of Kenya?",
-    options: ["A. Nairobi", "B. Mombasa", "C. Kisumu", "D. Eldoret"],
+    options: ["A. Nairobi", "B. Mombasa", "C. Kisumu", "D. Nakuru"],
     answer: "A"
   },
   {
     question: "Which language runs in a web browser?",
-    options: ["A. Python", "B. Java", "C. C++", "D. JavaScript"],
-    answer: "D"
+    options: ["A. Python", "B. JavaScript", "C. C++", "D. Java"],
+    answer: "B"
   },
   {
     question: "What does HTML stand for?",
     options: [
-      "A. Hyper Trainer Marking Language",
+      "A. Hyper Trainer Markup Language",
       "B. HyperText Markup Language",
-      "C. HyperText Markdown Language",
-      "D. HighText Machine Language"
+      "C. HighText Machine Language",
+      "D. Hyper Tool Multi Language"
     ],
     answer: "B"
   }
 ];
 
-const readline = require("readline");
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
+-
 const gameState = {
+  currentIndex: 0,
   score: 0,
-  currentQuestion: 0
+  startTime: null,
+  endTime: null
 };
 
 function startGame() {
-  console.log("\n=== Welcome to the Trivia Game ===");
-  console.log("You have 10 seconds per question!\n");
+  console.log("\n🎮 Welcome to the Trivia Game!");
+  console.log("You will have 10 seconds per question.\n");
+
+  gameState.startTime = Date.now();
+  gameState.currentIndex = 0;
   gameState.score = 0;
-  gameState.currentQuestion = 0;
 
   askQuestion();
 }
 
 function askQuestion() {
-  if (gameState.currentQuestion >= questions.length) {
-    endGame();
-    return;
+  if (gameState.currentIndex >= quizQuestions.length) {
+    return endGame();
   }
 
-  const q = questions[gameState.currentQuestion];
+  const current = quizQuestions[gameState.currentIndex];
 
-  console.log(`\nQuestion ${gameState.currentQuestion + 1}: ${q.question}`);
-  q.options.forEach(opt => console.log(opt));
+  console.log(`\nQuestion ${gameState.currentIndex + 1}: ${current.question}`);
+
+  current.options.map(option => console.log(option));
 
   let answered = false;
 
   const timer = setTimeout(() => {
     if (!answered) {
-      console.log("\n⏰ Time's up! Moving to next question.");
-      gameState.currentQuestion++;
+      console.log("\n⏰ Time's up!");
+      gameState.currentIndex++;
       askQuestion();
     }
   }, 10000);
@@ -67,25 +71,40 @@ function askQuestion() {
     answered = true;
     clearTimeout(timer);
 
-    handleAnswer(input.trim().toUpperCase(), q.answer);
+    validateAnswer(input.trim().toUpperCase(), current.answer);
   });
 }
 
-function handleAnswer(userAnswer, correctAnswer) {
+function validateAnswer(userAnswer, correctAnswer) {
   if (userAnswer === correctAnswer) {
     console.log("✅ Correct!");
     gameState.score++;
   } else {
-    console.log(`❌ Incorrect! Correct answer was ${correctAnswer}`);
+    console.log(`❌ Incorrect! Correct answer: ${correctAnswer}`);
   }
 
-  gameState.currentQuestion++;
+  gameState.currentIndex++;
   askQuestion();
 }
 
 function endGame() {
-  console.log("\n=== Game Over ===");
-  console.log(`Your final score: ${gameState.score} / ${questions.length}`);
+  gameState.endTime = Date.now();
+
+  const timeTaken = ((gameState.endTime - gameState.startTime) / 1000).toFixed(2);
+
+  console.log("\n===========================");
+  console.log("🎯 GAME OVER");
+  console.log("===========================");
+
+  console.log(`Score: ${gameState.score} / ${quizQuestions.length}`);
+  console.log(`Time Taken: ${timeTaken} seconds`);
+
+  const percentScore = quizQuestions.reduce((acc, _, index) => {
+    return acc + (index < gameState.score ? 1 : 0);
+  }, 0);
+
+  console.log(`Performance: ${percentScore}/${quizQuestions.length}`);
+
   rl.close();
 }
 
